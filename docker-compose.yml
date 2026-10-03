@@ -1,0 +1,25 @@
+name: minecraft
+
+services:
+  mc:
+    build: .
+    image: mc-server
+    container_name: mc
+    restart: unless-stopped
+    ports:
+      - "25565:25565"
+    environment:
+      # accept the Minecraft EULA (https://aka.ms/MinecraftEULA)
+      EULA: "true"
+      # JVM heap via -Xms / -Xmx; keep MEM_MAX below mem_limit (~1.5G headroom)
+      MEM_MIN: "1G"
+      MEM_MAX: "4G"
+    # container memory ceiling; kernel OOM-killer backs this up
+    mem_limit: 5g
+    volumes:
+      # all server state (world, configs, logs, downloads) on the host
+      - ./data:/data
+      # drop mod jars into ./mods on the host
+      - ./mods:/data/mods
+    # give the JVM time to save the world on `docker compose stop`
+    stop_grace_period: 1m

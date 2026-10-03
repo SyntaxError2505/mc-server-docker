@@ -4,6 +4,8 @@
 # Except these files
 !/.gitignore
 !/Dockerfile
+!/docker-entrypoint.sh
+!/docker-compose.yml
 !/flake.nix
 !/flake.lock
 !/fabric-server-mc.26.3-loader.0.19.5-launcher.1.1.2.jar
